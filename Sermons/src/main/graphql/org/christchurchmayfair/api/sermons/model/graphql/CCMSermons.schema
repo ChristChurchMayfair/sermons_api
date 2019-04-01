@@ -1,0 +1,1854 @@
+﻿type AddToSermonOnEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermonsSermon: Sermon
+  eventEvent: Event
+  sermonsSermonEdge: SermonEdge
+  eventEventEdge: EventEdge
+}
+
+input AddToSermonOnEventSermonInput {
+  eventEventId: ID!
+  sermonsSermonId: ID!
+  clientMutationId: String!
+}
+
+type AddToSermonOnSeriesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermonsSermon: Sermon
+  seriesSeries: Series
+  sermonsSermonEdge: SermonEdge
+  seriesSeriesEdge: SeriesEdge
+}
+
+input AddToSermonOnSeriesSermonInput {
+  seriesSeriesId: ID!
+  sermonsSermonId: ID!
+  clientMutationId: String!
+}
+
+type AddToSermonOnSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermonsSermon: Sermon
+  speakersSpeaker: Speaker
+  sermonsSermonEdge: SermonEdge
+  speakersSpeakerEdge: SpeakerEdge
+}
+
+input AddToSermonOnSpeakerSermonInput {
+  speakersSpeakerId: ID!
+  sermonsSermonId: ID!
+  clientMutationId: String!
+}
+
+input CreateEvent {
+  name: String!
+  sermonsIds: [ID!]
+  sermons: [EventsermonsSermon!]
+}
+
+input CreateEventInput {
+  name: String!
+  sermonsIds: [ID!]
+  sermons: [EventsermonsSermon!]
+  clientMutationId: String!
+}
+
+type CreateEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+}
+
+input CreateFile {
+  name: String!
+}
+
+input CreateFileInput {
+  name: String!
+  clientMutationId: String!
+}
+
+type CreateFilePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  file: File
+  edge: FileEdge
+}
+
+input CreateSeries {
+  image3x2Url: String
+  name: String!
+  subtitle: String
+  sermonsIds: [ID!]
+  sermons: [SeriessermonsSermon!]
+}
+
+input CreateSeriesInput {
+  image3x2Url: String
+  name: String!
+  subtitle: String
+  sermonsIds: [ID!]
+  sermons: [SeriessermonsSermon!]
+  clientMutationId: String!
+}
+
+type CreateSeriesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  series: Series
+  edge: SeriesEdge
+}
+
+input CreateSermon {
+  duration: Int!
+  name: String!
+  passage: String
+  preachedAt: DateTime!
+  url: String!
+  eventId: ID
+  event: SermoneventEvent
+  seriesId: ID
+  series: SermonseriesSeries
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+}
+
+input CreateSermonInput {
+  duration: Int!
+  name: String!
+  passage: String
+  preachedAt: DateTime!
+  url: String!
+  eventId: ID
+  event: SermoneventEvent
+  seriesId: ID
+  series: SermonseriesSeries
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+  clientMutationId: String!
+}
+
+type CreateSermonPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermon: Sermon
+  edge: SermonEdge
+  event: Event
+  series: Series
+}
+
+input CreateSpeaker {
+  name: String!
+  sermonsIds: [ID!]
+  sermons: [SpeakersermonsSermon!]
+}
+
+input CreateSpeakerInput {
+  name: String!
+  sermonsIds: [ID!]
+  sermons: [SpeakersermonsSermon!]
+  clientMutationId: String!
+}
+
+type CreateSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+}
+
+# If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
+  viewer: Viewer!
+}
+
+scalar DateTime
+
+input DeleteEventInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+  deletedId: ID
+}
+
+input DeleteFileInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteFilePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  file: File
+  edge: FileEdge
+  deletedId: ID
+}
+
+input DeleteSeriesInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteSeriesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  series: Series
+  edge: SeriesEdge
+  deletedId: ID
+}
+
+input DeleteSermonInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteSermonPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermon: Sermon
+  edge: SermonEdge
+  event: Event
+  series: Series
+  deletedId: ID
+}
+
+input DeleteSpeakerInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+  deletedId: ID
+}
+
+input DeleteUserInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+  deletedId: ID
+}
+
+type Event implements Node {
+  id: ID!
+  name: String!
+  sermons(filter: SermonFilter, orderBy: SermonOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SermonConnection
+}
+
+# A connection to a list of items.
+type EventConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [EventEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type EventEdge {
+  # The item at the end of the edge.
+  node: Event!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input EventFilter {
+  # Logical AND on all given filters.
+  AND: [EventFilter!]
+
+  # Logical OR on all given filters.
+  OR: [EventFilter!]
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  sermons_every: SermonFilter
+  sermons_some: SermonFilter
+  sermons_none: SermonFilter
+}
+
+enum EventOrderBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+input EventsermonsSermon {
+  duration: Int!
+  name: String!
+  passage: String
+  preachedAt: DateTime!
+  url: String!
+  seriesId: ID
+  series: SermonseriesSeries
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+}
+
+type File implements Node {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  secret: String!
+  size: Int!
+  updatedAt: DateTime!
+  url: String!
+}
+
+# A connection to a list of items.
+type FileConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [FileEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type FileEdge {
+  # The item at the end of the edge.
+  node: File!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input FileFilter {
+  # Logical AND on all given filters.
+  AND: [FileFilter!]
+
+  # Logical OR on all given filters.
+  OR: [FileFilter!]
+  contentType: String
+
+  # All values that are not equal to given value.
+  contentType_not: String
+
+  # All values that are contained in given list.
+  contentType_in: [String!]
+
+  # All values that are not contained in given list.
+  contentType_not_in: [String!]
+
+  # All values less than the given value.
+  contentType_lt: String
+
+  # All values less than or equal the given value.
+  contentType_lte: String
+
+  # All values greater than the given value.
+  contentType_gt: String
+
+  # All values greater than or equal the given value.
+  contentType_gte: String
+
+  # All values containing the given string.
+  contentType_contains: String
+
+  # All values not containing the given string.
+  contentType_not_contains: String
+
+  # All values starting with the given string.
+  contentType_starts_with: String
+
+  # All values not starting with the given string.
+  contentType_not_starts_with: String
+
+  # All values ending with the given string.
+  contentType_ends_with: String
+
+  # All values not ending with the given string.
+  contentType_not_ends_with: String
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  secret: String
+
+  # All values that are not equal to given value.
+  secret_not: String
+
+  # All values that are contained in given list.
+  secret_in: [String!]
+
+  # All values that are not contained in given list.
+  secret_not_in: [String!]
+
+  # All values less than the given value.
+  secret_lt: String
+
+  # All values less than or equal the given value.
+  secret_lte: String
+
+  # All values greater than the given value.
+  secret_gt: String
+
+  # All values greater than or equal the given value.
+  secret_gte: String
+
+  # All values containing the given string.
+  secret_contains: String
+
+  # All values not containing the given string.
+  secret_not_contains: String
+
+  # All values starting with the given string.
+  secret_starts_with: String
+
+  # All values not starting with the given string.
+  secret_not_starts_with: String
+
+  # All values ending with the given string.
+  secret_ends_with: String
+
+  # All values not ending with the given string.
+  secret_not_ends_with: String
+  size: Int
+
+  # All values that are not equal to given value.
+  size_not: Int
+
+  # All values that are contained in given list.
+  size_in: [Int!]
+
+  # All values that are not contained in given list.
+  size_not_in: [Int!]
+
+  # All values less than the given value.
+  size_lt: Int
+
+  # All values less than or equal the given value.
+  size_lte: Int
+
+  # All values greater than the given value.
+  size_gt: Int
+
+  # All values greater than or equal the given value.
+  size_gte: Int
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  url: String
+
+  # All values that are not equal to given value.
+  url_not: String
+
+  # All values that are contained in given list.
+  url_in: [String!]
+
+  # All values that are not contained in given list.
+  url_not_in: [String!]
+
+  # All values less than the given value.
+  url_lt: String
+
+  # All values less than or equal the given value.
+  url_lte: String
+
+  # All values greater than the given value.
+  url_gt: String
+
+  # All values greater than or equal the given value.
+  url_gte: String
+
+  # All values containing the given string.
+  url_contains: String
+
+  # All values not containing the given string.
+  url_not_contains: String
+
+  # All values starting with the given string.
+  url_starts_with: String
+
+  # All values not starting with the given string.
+  url_not_starts_with: String
+
+  # All values ending with the given string.
+  url_ends_with: String
+
+  # All values not ending with the given string.
+  url_not_ends_with: String
+}
+
+enum FileOrderBy {
+  contentType_ASC
+  contentType_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  secret_ASC
+  secret_DESC
+  size_ASC
+  size_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  url_ASC
+  url_DESC
+}
+
+input InvokeFunctionInput {
+  name: String!
+  input: String!
+  clientMutationId: String
+}
+
+type InvokeFunctionPayload {
+  result: String!
+  clientMutationId: String
+}
+
+type Mutation {
+  createEvent(input: CreateEventInput!): CreateEventPayload
+  createFile(input: CreateFileInput!): CreateFilePayload
+  createSeries(input: CreateSeriesInput!): CreateSeriesPayload
+  createSermon(input: CreateSermonInput!): CreateSermonPayload
+  createSpeaker(input: CreateSpeakerInput!): CreateSpeakerPayload
+  updateEvent(input: UpdateEventInput!): UpdateEventPayload
+  updateFile(input: UpdateFileInput!): UpdateFilePayload
+  updateSeries(input: UpdateSeriesInput!): UpdateSeriesPayload
+  updateSermon(input: UpdateSermonInput!): UpdateSermonPayload
+  updateSpeaker(input: UpdateSpeakerInput!): UpdateSpeakerPayload
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+  updateOrCreateEvent(input: UpdateOrCreateEventInput!): UpdateOrCreateEventPayload
+  updateOrCreateFile(input: UpdateOrCreateFileInput!): UpdateOrCreateFilePayload
+  updateOrCreateSeries(input: UpdateOrCreateSeriesInput!): UpdateOrCreateSeriesPayload
+  updateOrCreateSermon(input: UpdateOrCreateSermonInput!): UpdateOrCreateSermonPayload
+  updateOrCreateSpeaker(input: UpdateOrCreateSpeakerInput!): UpdateOrCreateSpeakerPayload
+  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  deleteEvent(input: DeleteEventInput!): DeleteEventPayload
+  deleteFile(input: DeleteFileInput!): DeleteFilePayload
+  deleteSeries(input: DeleteSeriesInput!): DeleteSeriesPayload
+  deleteSermon(input: DeleteSermonInput!): DeleteSermonPayload
+  deleteSpeaker(input: DeleteSpeakerInput!): DeleteSpeakerPayload
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+  addToSermonOnEvent(input: AddToSermonOnEventSermonInput!): AddToSermonOnEventPayload
+  addToSermonOnSeries(input: AddToSermonOnSeriesSermonInput!): AddToSermonOnSeriesPayload
+  addToSermonOnSpeaker(input: AddToSermonOnSpeakerSermonInput!): AddToSermonOnSpeakerPayload
+  removeFromSermonOnEvent(input: RemoveFromSermonOnEventSermonInput!): RemoveFromSermonOnEventPayload
+  removeFromSermonOnSeries(input: RemoveFromSermonOnSeriesSermonInput!): RemoveFromSermonOnSeriesPayload
+  removeFromSermonOnSpeaker(input: RemoveFromSermonOnSpeakerSermonInput!): RemoveFromSermonOnSpeakerPayload
+  createUser(input: SignupUserInput!): CreateUserPayload!
+  invokeFunction(input: InvokeFunctionInput!): InvokeFunctionPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Query {
+  viewer: Viewer!
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+type RemoveFromSermonOnEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermonsSermon: Sermon
+  eventEvent: Event
+  sermonsSermonEdge: SermonEdge
+  eventEventEdge: EventEdge
+}
+
+input RemoveFromSermonOnEventSermonInput {
+  eventEventId: ID!
+  sermonsSermonId: ID!
+  clientMutationId: String!
+}
+
+type RemoveFromSermonOnSeriesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermonsSermon: Sermon
+  seriesSeries: Series
+  sermonsSermonEdge: SermonEdge
+  seriesSeriesEdge: SeriesEdge
+}
+
+input RemoveFromSermonOnSeriesSermonInput {
+  seriesSeriesId: ID!
+  sermonsSermonId: ID!
+  clientMutationId: String!
+}
+
+type RemoveFromSermonOnSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermonsSermon: Sermon
+  speakersSpeaker: Speaker
+  sermonsSermonEdge: SermonEdge
+  speakersSpeakerEdge: SpeakerEdge
+}
+
+input RemoveFromSermonOnSpeakerSermonInput {
+  speakersSpeakerId: ID!
+  sermonsSermonId: ID!
+  clientMutationId: String!
+}
+
+type Series implements Node {
+  id: ID!
+  image3x2Url: String
+  name: String!
+  sermons(filter: SermonFilter, orderBy: SermonOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SermonConnection
+  subtitle: String
+}
+
+# A connection to a list of items.
+type SeriesConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [SeriesEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type SeriesEdge {
+  # The item at the end of the edge.
+  node: Series!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input SeriesFilter {
+  # Logical AND on all given filters.
+  AND: [SeriesFilter!]
+
+  # Logical OR on all given filters.
+  OR: [SeriesFilter!]
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  image3x2Url: String
+
+  # All values that are not equal to given value.
+  image3x2Url_not: String
+
+  # All values that are contained in given list.
+  image3x2Url_in: [String!]
+
+  # All values that are not contained in given list.
+  image3x2Url_not_in: [String!]
+
+  # All values less than the given value.
+  image3x2Url_lt: String
+
+  # All values less than or equal the given value.
+  image3x2Url_lte: String
+
+  # All values greater than the given value.
+  image3x2Url_gt: String
+
+  # All values greater than or equal the given value.
+  image3x2Url_gte: String
+
+  # All values containing the given string.
+  image3x2Url_contains: String
+
+  # All values not containing the given string.
+  image3x2Url_not_contains: String
+
+  # All values starting with the given string.
+  image3x2Url_starts_with: String
+
+  # All values not starting with the given string.
+  image3x2Url_not_starts_with: String
+
+  # All values ending with the given string.
+  image3x2Url_ends_with: String
+
+  # All values not ending with the given string.
+  image3x2Url_not_ends_with: String
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  subtitle: String
+
+  # All values that are not equal to given value.
+  subtitle_not: String
+
+  # All values that are contained in given list.
+  subtitle_in: [String!]
+
+  # All values that are not contained in given list.
+  subtitle_not_in: [String!]
+
+  # All values less than the given value.
+  subtitle_lt: String
+
+  # All values less than or equal the given value.
+  subtitle_lte: String
+
+  # All values greater than the given value.
+  subtitle_gt: String
+
+  # All values greater than or equal the given value.
+  subtitle_gte: String
+
+  # All values containing the given string.
+  subtitle_contains: String
+
+  # All values not containing the given string.
+  subtitle_not_contains: String
+
+  # All values starting with the given string.
+  subtitle_starts_with: String
+
+  # All values not starting with the given string.
+  subtitle_not_starts_with: String
+
+  # All values ending with the given string.
+  subtitle_ends_with: String
+
+  # All values not ending with the given string.
+  subtitle_not_ends_with: String
+  sermons_every: SermonFilter
+  sermons_some: SermonFilter
+  sermons_none: SermonFilter
+}
+
+enum SeriesOrderBy {
+  id_ASC
+  id_DESC
+  image3x2Url_ASC
+  image3x2Url_DESC
+  name_ASC
+  name_DESC
+  subtitle_ASC
+  subtitle_DESC
+}
+
+input SeriessermonsSermon {
+  duration: Int!
+  name: String!
+  passage: String
+  preachedAt: DateTime!
+  url: String!
+  eventId: ID
+  event: SermoneventEvent
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+}
+
+type Sermon implements Node {
+  duration: Int!
+  event(filter: EventFilter): Event
+  id: ID!
+  name: String!
+  passage: String
+  preachedAt: DateTime!
+  series(filter: SeriesFilter): Series
+  speakers(filter: SpeakerFilter, orderBy: SpeakerOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SpeakerConnection
+  url: String!
+}
+
+# A connection to a list of items.
+type SermonConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [SermonEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type SermonEdge {
+  # The item at the end of the edge.
+  node: Sermon!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input SermoneventEvent {
+  name: String!
+  sermonsIds: [ID!]
+  sermons: [EventsermonsSermon!]
+}
+
+input SermonFilter {
+  # Logical AND on all given filters.
+  AND: [SermonFilter!]
+
+  # Logical OR on all given filters.
+  OR: [SermonFilter!]
+  duration: Int
+
+  # All values that are not equal to given value.
+  duration_not: Int
+
+  # All values that are contained in given list.
+  duration_in: [Int!]
+
+  # All values that are not contained in given list.
+  duration_not_in: [Int!]
+
+  # All values less than the given value.
+  duration_lt: Int
+
+  # All values less than or equal the given value.
+  duration_lte: Int
+
+  # All values greater than the given value.
+  duration_gt: Int
+
+  # All values greater than or equal the given value.
+  duration_gte: Int
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  passage: String
+
+  # All values that are not equal to given value.
+  passage_not: String
+
+  # All values that are contained in given list.
+  passage_in: [String!]
+
+  # All values that are not contained in given list.
+  passage_not_in: [String!]
+
+  # All values less than the given value.
+  passage_lt: String
+
+  # All values less than or equal the given value.
+  passage_lte: String
+
+  # All values greater than the given value.
+  passage_gt: String
+
+  # All values greater than or equal the given value.
+  passage_gte: String
+
+  # All values containing the given string.
+  passage_contains: String
+
+  # All values not containing the given string.
+  passage_not_contains: String
+
+  # All values starting with the given string.
+  passage_starts_with: String
+
+  # All values not starting with the given string.
+  passage_not_starts_with: String
+
+  # All values ending with the given string.
+  passage_ends_with: String
+
+  # All values not ending with the given string.
+  passage_not_ends_with: String
+  preachedAt: DateTime
+
+  # All values that are not equal to given value.
+  preachedAt_not: DateTime
+
+  # All values that are contained in given list.
+  preachedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  preachedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  preachedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  preachedAt_lte: DateTime
+
+  # All values greater than the given value.
+  preachedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  preachedAt_gte: DateTime
+  url: String
+
+  # All values that are not equal to given value.
+  url_not: String
+
+  # All values that are contained in given list.
+  url_in: [String!]
+
+  # All values that are not contained in given list.
+  url_not_in: [String!]
+
+  # All values less than the given value.
+  url_lt: String
+
+  # All values less than or equal the given value.
+  url_lte: String
+
+  # All values greater than the given value.
+  url_gt: String
+
+  # All values greater than or equal the given value.
+  url_gte: String
+
+  # All values containing the given string.
+  url_contains: String
+
+  # All values not containing the given string.
+  url_not_contains: String
+
+  # All values starting with the given string.
+  url_starts_with: String
+
+  # All values not starting with the given string.
+  url_not_starts_with: String
+
+  # All values ending with the given string.
+  url_ends_with: String
+
+  # All values not ending with the given string.
+  url_not_ends_with: String
+  event: EventFilter
+  series: SeriesFilter
+  speakers_every: SpeakerFilter
+  speakers_some: SpeakerFilter
+  speakers_none: SpeakerFilter
+}
+
+enum SermonOrderBy {
+  duration_ASC
+  duration_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  passage_ASC
+  passage_DESC
+  preachedAt_ASC
+  preachedAt_DESC
+  url_ASC
+  url_DESC
+}
+
+input SermonseriesSeries {
+  image3x2Url: String
+  name: String!
+  subtitle: String
+  sermonsIds: [ID!]
+  sermons: [SeriessermonsSermon!]
+}
+
+input SermonspeakersSpeaker {
+  name: String!
+  sermonsIds: [ID!]
+  sermons: [SpeakersermonsSermon!]
+}
+
+input SignupUserInput {
+  clientMutationId: String!
+}
+
+type Speaker implements Node {
+  id: ID!
+  name: String!
+  sermons(filter: SermonFilter, orderBy: SermonOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SermonConnection
+}
+
+# A connection to a list of items.
+type SpeakerConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [SpeakerEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type SpeakerEdge {
+  # The item at the end of the edge.
+  node: Speaker!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input SpeakerFilter {
+  # Logical AND on all given filters.
+  AND: [SpeakerFilter!]
+
+  # Logical OR on all given filters.
+  OR: [SpeakerFilter!]
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  sermons_every: SermonFilter
+  sermons_some: SermonFilter
+  sermons_none: SermonFilter
+}
+
+enum SpeakerOrderBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+input SpeakersermonsSermon {
+  duration: Int!
+  name: String!
+  passage: String
+  preachedAt: DateTime!
+  url: String!
+  eventId: ID
+  event: SermoneventEvent
+  seriesId: ID
+  series: SermonseriesSeries
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+}
+
+input UpdateEvent {
+  id: ID!
+  name: String
+  sermonsIds: [ID!]
+  sermons: [EventsermonsSermon!]
+}
+
+input UpdateEventInput {
+  id: ID!
+  name: String
+  sermonsIds: [ID!]
+  sermons: [EventsermonsSermon!]
+  clientMutationId: String!
+}
+
+type UpdateEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+}
+
+input UpdateFile {
+  id: ID!
+  name: String
+}
+
+input UpdateFileInput {
+  id: ID!
+  name: String
+  clientMutationId: String!
+}
+
+type UpdateFilePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  file: File
+  edge: FileEdge
+}
+
+input UpdateOrCreateEventInput {
+  update: UpdateEvent!
+  create: CreateEvent!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+}
+
+input UpdateOrCreateFileInput {
+  update: UpdateFile!
+  create: CreateFile!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateFilePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  file: File
+  edge: FileEdge
+}
+
+input UpdateOrCreateSeriesInput {
+  update: UpdateSeries!
+  create: CreateSeries!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateSeriesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  series: Series
+  edge: SeriesEdge
+}
+
+input UpdateOrCreateSermonInput {
+  update: UpdateSermon!
+  create: CreateSermon!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateSermonPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermon: Sermon
+  edge: SermonEdge
+  event: Event
+  series: Series
+}
+
+input UpdateOrCreateSpeakerInput {
+  update: UpdateSpeaker!
+  create: CreateSpeaker!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+}
+
+input UpdateOrCreateUserInput {
+  update: UpdateUser!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+input UpdateSeries {
+  id: ID!
+  image3x2Url: String
+  name: String
+  subtitle: String
+  sermonsIds: [ID!]
+  sermons: [SeriessermonsSermon!]
+}
+
+input UpdateSeriesInput {
+  id: ID!
+  image3x2Url: String
+  name: String
+  subtitle: String
+  sermonsIds: [ID!]
+  sermons: [SeriessermonsSermon!]
+  clientMutationId: String!
+}
+
+type UpdateSeriesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  series: Series
+  edge: SeriesEdge
+}
+
+input UpdateSermon {
+  duration: Int
+  id: ID!
+  name: String
+  passage: String
+  preachedAt: DateTime
+  url: String
+  eventId: ID
+  event: SermoneventEvent
+  seriesId: ID
+  series: SermonseriesSeries
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+}
+
+input UpdateSermonInput {
+  duration: Int
+  id: ID!
+  name: String
+  passage: String
+  preachedAt: DateTime
+  url: String
+  eventId: ID
+  event: SermoneventEvent
+  seriesId: ID
+  series: SermonseriesSeries
+  speakersIds: [ID!]
+  speakers: [SermonspeakersSpeaker!]
+  clientMutationId: String!
+}
+
+type UpdateSermonPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  sermon: Sermon
+  edge: SermonEdge
+  event: Event
+  series: Series
+}
+
+input UpdateSpeaker {
+  id: ID!
+  name: String
+  sermonsIds: [ID!]
+  sermons: [SpeakersermonsSermon!]
+}
+
+input UpdateSpeakerInput {
+  id: ID!
+  name: String
+  sermonsIds: [ID!]
+  sermons: [SpeakersermonsSermon!]
+  clientMutationId: String!
+}
+
+type UpdateSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+}
+
+input UpdateUser {
+  id: ID!
+}
+
+input UpdateUserInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type UpdateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+type User implements Node {
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [UserEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge.
+  node: User!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input UserFilter {
+  # Logical AND on all given filters.
+  AND: [UserFilter!]
+
+  # Logical OR on all given filters.
+  OR: [UserFilter!]
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+}
+
+enum UserOrderBy {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+# This is the famous Relay viewer object
+type Viewer {
+  allEvents(filter: EventFilter, orderBy: EventOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  allFiles(filter: FileFilter, orderBy: FileOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
+  allSeries(filter: SeriesFilter, orderBy: SeriesOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SeriesConnection!
+  allSermons(filter: SermonFilter, orderBy: SermonOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SermonConnection!
+  allSpeakers(filter: SpeakerFilter, orderBy: SpeakerOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): SpeakerConnection!
+  allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user: User
+  Event(id: ID, name: String): Event
+  File(id: ID, secret: String, url: String): File
+  Series(id: ID, name: String): Series
+  Sermon(id: ID, url: String): Sermon
+  Speaker(id: ID, name: String): Speaker
+  User(id: ID): User
+  id: ID!
+}

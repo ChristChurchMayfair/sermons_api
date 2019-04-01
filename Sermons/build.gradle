@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+
+    mavenCentral()
+
+}
+
+dependencies {
+    implementation 'software.amazon.awssdk:annotations:2.1.0'
+	compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
+    compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.6'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-secretsmanager', version: '1.11.524'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.525'
+
+
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.7'
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.8'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.8'
+
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.25.1'
+
+    testImplementation 'org.hamcrest:hamcrest:2.1'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+group 'org.christchurchmayfair'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+

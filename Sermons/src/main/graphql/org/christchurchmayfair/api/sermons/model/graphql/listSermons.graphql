@@ -1,0 +1,13 @@
+query($number:Int!) {
+        allSermons(last: $number, orderBy:preachedAt_ASC) {
+            name,
+            id,
+            url,
+            passage,
+            series { id, name },
+            speakers { id, name },
+            event { id, name },
+            duration,
+            preachedAt
+        }
+    }

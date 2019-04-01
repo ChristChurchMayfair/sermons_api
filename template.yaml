@@ -1,0 +1,153 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  ccm_sermons_api
+
+  Sample SAM Template for ccm_sermons_api
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+    Runtime: java8
+    MemorySize: 512
+    Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Variables:
+        GRAPHQL_ENDPOINT: https://api.graph.cool/simple/v1/cjkqvvoxy2pyy0175cdmdy1mz
+        GRAPHCOOL_TOKEN_SECRET_NAME: prod/sermons/graphcool/token
+        GRAPHCOOL_SECRET_REGION: eu-west-2
+        UPLOAD_BUCKET_NAME: media.christchurchmayfair.org
+        UPLOAD_BUCKET_REGION: eu-west-1
+        UPLOAD_TARGET_PATH: talkstest
+        CORS_ALLOW_ORIGIN: https://sermons.admin.christchurchmayfair.org
+  Api:
+    Cors:
+      AllowMethods: "'OPTIONS, POST, GET'"
+      AllowHeaders: "'Content-Type, Referer, User-Agent, Accept'"
+      AllowOrigin: "'https://sermons.admin.christchurchmayfair.org'"
+
+Resources:
+  GetSermons:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.GetSermons::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+
+      Events:
+        GetSermons:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /sermons
+            Method: get
+
+  GetSeries:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.GetSerieses::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+      Events:
+        GetSeries:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /series
+            Method: get
+
+  GetSpeakers:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.GetSpeakers::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+      Events:
+        GetSpeakers:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /speakers
+            Method: get
+
+  GetEvents:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.GetEvents::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+      Events:
+        GetEvents:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /events
+            Method: get
+
+  CreateSermon:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.CreateSermon::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+      Events:
+        GetEvents:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /sermons
+            Method: post
+
+  GetSignedSermonUploadURL:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.GetSignedSermonUploadURL::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+      Events:
+        GetEvents:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /uploadurl
+            Method: post
+
+  SermonAPIFunction:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - 'lambda.amazonaws.com'
+          Action:
+          - 'sts:AssumeRole'
+      ManagedPolicyArns:
+      - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+      - PolicyName: 'ParameterStoreSermonAPIParameterAccess'
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - 'ssm:GetParameter*'
+            Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/prod/sermons*'
+      - PolicyName: 'ParameterStoreSermonAPISecretAccess'
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - 'secretsmanager:GetSecretValue'
+            Resource: !Sub 'arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:prod/sermons*'
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CCMSermonAPI:
+    Description: "API Gateway endpoint URL for Prod stage for Sermon function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/sermons"
+  SermonAPIFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt SermonAPIFunction.Arn
+  SermonAPIFunction:
+    Description: "Implicit IAM Role created for Sermons API functions"
+    Value: !GetAtt SermonAPIFunction.Arn
