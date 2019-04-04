@@ -20,6 +20,9 @@ Globals:
         UPLOAD_BUCKET_REGION: eu-west-1
         UPLOAD_TARGET_PATH: talkstest
         CORS_ALLOW_ORIGIN: https://sermons.admin.christchurchmayfair.org
+        GITHUB_CLIENT_ID: 13781417cd1a751db388
+        GITHUB_OAUTH_SECRET_NAME: prod/sermons/github/oauth/secret
+        GITHUB_OAUTH_SECRET_REGION: eu-west-2
   Api:
     Cors:
       AllowMethods: "'OPTIONS, POST, GET'"
@@ -104,6 +107,19 @@ Resources:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /uploadurl
+            Method: post
+
+  GithubLogin:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Sermons
+      Handler: org.christchurchmayfair.api.sermons.GithubLogin::handleRequest
+      Role: !GetAtt SermonAPIFunction.Arn
+      Events:
+        GetEvents:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /githublogin
             Method: post
 
   SermonAPIFunction:
